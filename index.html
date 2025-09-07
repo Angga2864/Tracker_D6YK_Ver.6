@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESTIMATE RAILWAYS JOGJA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+   <style>
+    :root {
+        --primary-color: #1E40AF;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --light-color: #0cc928;
+        --dark-color: #2c3e50;
+        --success-color: #f40505;
+        --warning-color: #ff6f00;
+        --danger-color: #4d4c4b;
+        --darkorange-color: #ff3131;
+        --terminus-color: #8B5CF6;
+        --background-color: #f8fafc;
+        --text-color: #334155;
+        --border-color: #e2e8f0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        padding-top: 60px;
+        font-size: 15px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+
+    header {
+        background: linear-gradient(135deg, var(--primary-color), #1a3a9c);
+        color: white;
+        padding: 18px 0;
+        text-align: center;
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+        margin-bottom: 8px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    header p {
+        font-size: 1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .station-selector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .station-selector h2 {
+        font-size: 1.1rem;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .hamburger-menu {
+        padding: 10px 22px;
+        border: none;
+        border-radius: 50px;
+        background: linear-gradient(135deg, var(--secondary-color), #2563eb);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 auto;
+    }
+
+    .hamburger-menu:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 220px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        z-index: 10;
+        border-radius: 10px;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .dropdown-content a {
+        color: var(--dark-color);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .dropdown-content a:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f5f9;
+        color: var(--primary-color);
+    }
+
+    .dropdown-content a.active {
+        background: linear-gradient(135deg, var(--warning-color), #e56a00);
+        color: white;
+    }
+
+    .dropdown-content.show {
+        display: block;
+    }
+
+    .realtime-info {
+        background-color: white;
+        border-radius: 10px;
+        padding: 18px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        text-align: center;
+        border: 1px solid var(--border-color);
+    }
+
+    .current-time {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 4px;
+        letter-spacing: 1px;
+    }
+
+    .current-date {
+        font-size: 1rem;
+        color: #64748b;
+        margin-bottom: 15px;
+    }
+
+    .station-name {
+        font-size: 1.3rem;
+        color: var(--accent-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .refresh-btn, .schedule-btn, .feedback-submit {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 auto 25px;
+        font-weight: 500;
+    }
+
+    .refresh-btn {
+        background: linear-gradient(135deg, var(--darkorange-color), #e52b2b);
+        color: white;
+    }
+
+    .refresh-btn:hover {
+        background: linear-gradient(135deg, #e52b2b, #cc0000);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(229, 43, 43, 0.25);
+    }
+
+    .schedule-btn {
+        background: linear-gradient(135deg, var(--warning-color), #e56a00);
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .schedule-btn:hover {
+        background: linear-gradient(135deg, #e56a00, #cc5500);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(229, 106, 0, 0.25);
+    }
+
+    .train-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .train-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 18px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .passed .section-title {
+        color: var(--darkorange-color);
+    }
+
+    .current .section-title {
+        color: var(--primary-color);
+    }
+
+    .upcoming .section-title {
+        color: var(--warning-color);
+    }
+
+    .train-list {
+        list-style: none;
+    }
+
+    .train-item {
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .train-item:last-child {
+        border-bottom: none;
+    }
+
+    .train-number {
+        font-weight: 700;
+        color: var(--dark-color);
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .train-name {
+        font-weight: 500;
+        margin: 4px 0;
+        color: #475569;
+    }
+
+    .train-time {
+        font-size: 0.85rem;
+        color: #64748b;
+    }
+
+    .train-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+
+    .train-status.berhenti {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .train-status.langsung {
+        background-color: var(--light-color);
+        color: white;
+    }
+
+    .train-status.terminus {
+        background-color: var(--terminus-color);
+        color: white;
+    }
+
+    .no-trains {
+        color: #94a3b8;
+        font-style: italic;
+        padding: 12px 0;
+        text-align: center;
+    }
+
+    .feedback-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 18px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-color);
+    }
+
+    .feedback-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--secondary-color);
+    }
+
+    .feedback-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .feedback-input {
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-family: "Roboto", sans-serif;
+        font-size: 0.95rem;
+        resize: vertical;
+        min-height: 100px;
+        transition: border-color 0.3s ease;
+    }
+
+    .feedback-input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .feedback-submit {
+        background: linear-gradient(135deg, var(--light-color), #0ab120);
+        align-self: flex-end;
+        margin: 5px 0 0;
+    }
+
+    .feedback-submit:hover {
+        background: linear-gradient(135deg, #0ab120, #09921c);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(10, 177, 32, 0.25);
+    }
+
+    footer {
+        text-align: center;
+        padding: 18px;
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-top: 25px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        overflow: auto;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 20px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 900px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        position: relative;
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal.show .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-header {
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, var(--primary-color), #1a3a9c);
+        color: white;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        opacity: 0.8;
+    }
+
+    .close-btn:hover {
+        transform: rotate(90deg);
+        opacity: 1;
+    }
+
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .station-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+
+    .station-tab {
+        padding: 8px 16px;
+        background-color: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .station-tab.active {
+        background: linear-gradient(135deg, var(--accent-color), #e56a00);
+        color: white;
+        border-color: var(--accent-color);
+    }
+
+    .schedule-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .search-box {
+        padding: 10px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        font-size: 0.95rem;
+        min-width: 220px;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-box:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .schedule-table th {
+        background-color: #f1f5f9;
+        color: var(--dark-color);
+        position: sticky;
+        top: 0;
+        font-weight: 600;
+    }
+
+    .schedule-table tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    .schedule-table tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-align: center;
+        min-width: 65px;
+    }
+
+    .status-berhenti {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .status-langsung {
+        background-color: var(--light-color);
+        color: white;
+    }
+
+    .status-terminus {
+        background-color: var(--terminus-color);
+        color: white;
+    }
+
+    .running-text-container {
+        background: linear-gradient(135deg, var(--secondary-color), #2563eb);
+        color: white;
+        padding: 10px 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        min-height: 45px;
+    }
+
+    .running-text {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: runText 35s linear infinite;
+        padding-right: 50px; /* Memberikan jarak antara pengulangan */
+    }
+
+    .running-icon {
+        margin-right: 12px;
+        font-size: 1rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .running-content {
+        font-weight: 500;
+        display: inline-block;
+        font-size: 0.95rem;
+    }
+
+    /* Animasi untuk running text */
+    @keyframes runText {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .running-text-container:hover .running-text {
+        animation-play-state: paused;
+    }
+
+    /* Responsive adjustments untuk running text */
+    @media (max-width: 768px) {
+        .running-text {
+            animation: runText 30s linear infinite;
+        }
+        
+        .running-icon {
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+        
+        .running-content {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .running-text {
+            animation: runText 25s linear infinite;
+        }
+        
+        .running-content {
+            font-size: 0.85rem;
+        }
+    }
+
+    /* CSS: Styling untuk kontrol musik */
+    .music-controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50px;
+        padding: 8px 15px 8px 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .music-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--secondary-color), #2563eb);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .music-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+    }
+    
+    .volume-control {
+        width: 0;
+        overflow: hidden;
+        transition: width 0.3s ease;
+    }
+    
+    .music-controls:hover .volume-control {
+        width: 100px;
+    }
+    
+    #volumeSlider {
+        width: 100%;
+        height: 5px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #e2e8f0;
+        outline: none;
+        border-radius: 5px;
+    }
+    
+    #volumeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: var(--secondary-color);
+        cursor: pointer;
+    }
+    
+    #volumeSlider::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: var(--secondary-color);
+        cursor: pointer;
+        border: none;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .music-controls {
+            bottom: 15px;
+            right: 15px;
+        }
+        
+        .music-controls:hover .volume-control {
+            width: 80px;
+        }
+    }
+
+    /* CSS untuk galeri slide show */
+    .gallery-container {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto 25px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(135deg, #1a3a9c, #1E40AF);
+        padding: 10px;
+    }
+    
+    .gallery-slider {
+        display: flex;
+        transition: transform 0.5s ease;
+        border-radius: 8px;
+        overflow: hidden;
+        transform: translateX(0%); /* Inisialisasi transform */
+    }
+    
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        display: block;
+        border-radius: 6px;
+        filter: sepia(20%) brightness(95%);
+        transition: transform 0.3s ease;
+        background-color: #f0f0f0; /* Fallback background */
+    }
+    
+    .slide img:hover {
+        transform: scale(1.02);
+    }
+    
+    .gallery-prev, .gallery-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+    
+    .gallery-prev:hover, .gallery-next:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .gallery-prev {
+        left: 15px;
+    }
+    
+    .gallery-next {
+        right: 15px;
+    }
+    
+    .gallery-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        z-index: 10;
+    }
+    
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+        background: rgba(255, 255, 255, 1);
+        transform: scale(1.2);
+    }
+    
+    /* Placeholder untuk gambar error */
+    .image-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #3B82F6, #1E40AF);
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .gallery-container {
+            margin: 0 15px 20px;
+            border-radius: 8px;
+        }
+        
+        .slide img {
+            height: 250px;
+        }
+        
+        .gallery-prev, .gallery-next {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .gallery-container {
+            margin: 0 10px 15px;
+            padding: 8px;
+        }
+        
+        .slide img {
+            height: 200px;
+        }
+        
+        .gallery-prev, .gallery-next {
+            width: 30px;
+            height: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-train"></i> Tracker Jadwal Kereta Api Daop 6 YK</h1>
+            <p>Pantau jadwal perjalanan kereta api di stasiun besar Jogjakarta pilihan Anda</p>
+        </header>
+
+        <!-- HTML: Tambahkan di bawah header, sebelum running text container -->
+<div class="gallery-container">
+    <div class="gallery-slider">
+        <div class="slide">
+            <img src="foto1.jpg" alt="Galeri Foto 1" onerror="handleImageError(this, 1)">
+        </div>
+        <div class="slide">
+            <img src="foto2.jpg" alt="Galeri Foto 2" onerror="handleImageError(this, 2)">
+        </div>
+        <div class="slide">
+            <img src="foto3.jpg" alt="Galeri Foto 3" onerror="handleImageError(this, 3)">
+        </div>
+        <div class="slide">
+            <img src="foto4.jpg" alt="Galeri Foto 4" onerror="handleImageError(this, 4)">
+        </div>
+        <div class="slide">
+            <img src="foto5.jpg" alt="Galeri Foto 5" onerror="handleImageError(this, 5)">
+        </div>
+    </div>
+    
+    <!-- Navigation dots -->
+    <div class="gallery-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+        <span class="dot" data-index="4"></span>
+    </div>
+    
+    <!-- Navigation buttons -->
+    <button class="gallery-prev">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="gallery-next">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+
+        <div class="running-text-container">
+            <div class="running-text">
+                <span class="running-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="running-content" id="runningTextContent">Informasi terbaru akan ditampilkan di sini. Pantau
+                    terus pergerakan kereta api di stasiun Yogyakarta dan Lempuyangan.</span>
+            </div>
+        </div>
+
+        <div class="station-selector">
+            <h2>Pilih stasiun kebangganmu:</h2>
+            <button class="hamburger-menu">
+                <i class="fas fa-bars"></i> Pilih Stasiun
+            </button>
+            <div class="dropdown-content">
+                <a href="#" data-station="YK">Stasiun Yogyakarta (YK)</a>
+                <a href="#" data-station="LPN">Stasiun Lempuyangan (LPN)</a>
+            </div>
+        </div>
+
+        <button id="refreshBtn" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+
+        <div class="realtime-info">
+            <div class="current-time" id="currentTime">00:00:00</div>
+            <div class="current-date" id="currentDate">Hari, 1 Januari 2025</div>
+            <div class="station-name" id="stationName">Pilih stasiun untuk memulai</div>
+        </div>
+
+        <div class="train-sections">
+            <div class="train-section passed">
+                <h2 class="section-title"><i class="fas fa-history"></i> Sudah Melintas</h2>
+                <ul class="train-list" id="passedTrains">
+                    <li class="no-trains">Pilih stasiun untuk melihat data</li>
+                </ul>
+            </div>
+
+            <div class="train-section current">
+                <h2 class="section-title"><i class="fas fa-clock"></i> Sedang Melintas</h2>
+                <ul class="train-list" id="currentTrains">
+                    <li class="no-trains">Pilih stasiun untuk melihat data</li>
+                </ul>
+            </div>
+
+            <div class="train-section upcoming">
+                <h2 class="section-title"><i class="fas fa-arrow-up"></i> Segera Melintas</h2>
+                <ul class="train-list" id="upcomingTrains">
+                    <li class="no-trains">Pilih stasiun untuk melihat data</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- elemen untuk kontrol musik -->
+    <div class="music-controls">
+    <button id="musicToggle" class="music-btn">
+        <i class="fas fa-music"></i>
+    </button>
+    <div class="volume-control">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+</div>
+
+<!-- Audio element (tambahkan di bagian body) -->
+<audio id="stationSound">
+    <source src="bel_stasiun.mp3" type="audio/mpeg">
+</audio>
+
+
+    <button id="showScheduleBtn" class="schedule-btn">
+        <i class="fas fa-calendar-alt"></i> Lihat Jadwal Lengkap...
+    </button>
+
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Jadwal Lengkap Kereta Api</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="station-tabs">
+                    <button class="station-tab active" data-station="YK">Stasiun Yogyakarta</button>
+                    <button class="station-tab" data-station="LPN">Stasiun Lempuyangan</button>
+                </div>
+
+                <div class="schedule-controls">
+                    <input type="text" id="trainSearch" class="search-box" placeholder="Cari kereta...">
+                </div>
+
+                <div id="scheduleTableContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <button id="musicBtn" class="refresh-btn">
+        <i class="fas fa-music"></i> Bel Kedatangan
+    </button>
+
+    <audio id="bgMusic" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung pemutar audio.
+    </audio>
+
+    <div class="feedback-section">
+        <h2 class="feedback-title"><i class="fas fa-comment"></i> Kritik dan Saran</h2>
+        <form class="feedback-form" id="feedbackForm">
+            <textarea class="feedback-input" id="feedbackInput" placeholder="Masukkan kritik dan saran Anda di sini..."
+                required></textarea>
+            <button type="submit" class="feedback-submit" id="feedbackSubmit">
+                <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+            </button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c"></i> oleh Didan Arisdya A P - 2025
+            [ver.5.0.]</p>
+    </footer>
+
+    <script>
+        // Database jadwal kereta api - DIPERBAIKI
+         const trainSchedules = {
+                YK: [
+                    { number: "KA 273", name: "Kahuripan", time: "00:02:59", status: "langsung" },
+                    { number: "KA 252", name: "Jayakarta", time: "00:29:00", status: "langsung" },
+                    { number: "KA 255", name: "Jaka Tingkir", time: "00:33:00", status: "langsung" },
+                    { number: "PLB 7001", name: "Gajayana Tambahan", time: "00:40:00", status: "berhenti" },
+                    { number: "KA 68", name: "Malabar", time: "00:51:00", status: "berhenti" },
+                    { number: "KA 301", name: "Parcel Tengah", time: "00:56:59", status: "langsung" },
+                    { number: "KA 305", name: "Parcel Selatan", time: "01:18:00", status: "langsung" },
+                    { number: "KA 36", name: "Gajayana", time: "01:23:59", status: "berhenti" },
+                    { number: "KA 169", name: "Malioboro Ekspres", time: "01:34:59", status: "berhenti" },
+                    { number: "KA 104", name: "Bogowonto", time: "01:38:00", status: "berhenti" },
+                    { number: "KA 80", name: "Lodaya", time: "01:47:00", status: "berhenti" },
+                    { number: "KA 87F", name: "Sancaka", time: "01:59:59", status: "terminus" },
+                    { number: "KA 108", name: "Senja Utama Yk", time: "01:59:59", status: "langsung" },
+                    { number: "KA 306", name: "Parcel Selatan", time: "02:24:00", status: "langsung" },
+                    { number: "KA 2711", name: "Bungtalun Service", time: "02:28:59", status: "langsung" },
+                    { number: "KA 72", name: "Mutiara Selatan", time: "02:35:00", status: "berhenti" },
+                    { number: "KA 14", name: "Argo Lawu", time: "02:46:59", status: "berhenti" },
+                    { number: "KA 302", name: "Parcel Tengah", time: "03:09:59", status: "langsung" },
+                    { number: "KA 2721", name: "Kalem Service", time: "03:15:00", status: "langsung" },
+                    { number: "KA 48", name: "Taksaka", time: "03:29:59", status: "terminus" },
+                    { number: "KA 2601", name: "Mawalo Tanker", time: "03:31:59", status: "langsung" },
+                    { number: "KA 144", name: "Madiun Jaya", time: "03:56:59", status: "berhenti" },
+                    { number: "KA 521", name: "Bandara YIA", time: "04:20:00", status: "berhenti" },
+                    { number: "KA 76", name: "Mataram", time: "04:34:59", status: "berhenti" },
+                    { number: "PLB 7025", name: "Tambahan SLO PSE", time: "04:52:00", status: "berhenti" },
+                    { number: "KA 2750F", name: "Cilace Trans", time: "04:57:59", status: "langsung" },
+                    { number: "KA 720", name: "Commuter Line Yogyakarta", time: "05:05:00", status: "terminus" },
+                    { number: "KA 561", name: "Bandara YIA", time: "05:10:00", status: "terminus" },
+                    { number: "KA 150", name: "Singasari", time: "05:26:59", status: "langsung" },
+                    { number: "KA 64", name: "Manahan", time: "05:39:00", status: "berhenti" },
+                    { number: "KA 729F", name: "Commuter Line Yogyakarta", time: "05:48:00", status: "terminus" },
+                    { number: "PLB 7007", name: "Tambahan YK GMR", time: "05:55:00", status: "langsung" },
+                    { number: "KA 522", name: "Bandara YIA", time: "05:55:00", status: "terminus" },
+                    { number: "KA 547F", name: "Bandara YIA", time: "06:00:00", status: "terminus" },
+                    { number: "KA 730F", name: "Commuter Line Yogyakarta", time: "06:00:00", status: "terminus" },
+                    { number: "KA 508", name: "Commuter Line Prameks Kutoarjo", time: "06:09:59", status: "terminus" },
+                    { number: "KA 274", name: "Kahuripan", time: "06:20:00", status: "langsung" },
+                    { number: "KA 701", name: "Commuter Line Yogyakarta", time: "06:23:00", status: "terminus" },
+                    { number: "KA 523", name: "Bandara YIA", time: "06:29:59", status: "terminus" },
+                    { number: "KA 258", name: "Progo", time: "06:35:00", status: "langsung" },
+                    { number: "KA 501", name: "Commuter Line Prameks Kutoarjo", time: "06:40:00", status: "terminus" },
+                    { number: "KA 84", name: "Sancaka", time: "06:45:00", status: "berhenti" },
+                    { number: "KA 562", name: "Bandara YIA", time: "06:58:59", status: "berhenti" },
+                    { number: "KA 109", name: "Fajar Utama Yk", time: "07:00:00", status: "terminus" },
+                    { number: "KA 702", name: "Commuter Line Yogyakarta", time: "07:05:00", status: "berhenti" },
+                    { number: "KA 193", name: "Joglosemarkerto", time: "07:05:59", status: "berhenti" },
+                    { number: "KA 2712", name: "Bungtalun Service", time: "07:14:59", status: "langsung" },
+                    { number: "KA 711", name: "Commuter Line Yogyakarta", time: "07:29:00", status: "terminus" },
+                    { number: "KA 43", name: "Taksaka", time: "07:30:00", status: "terminus" },
+                    { number: "PLB 7002", name: "Gajayana Tambahan", time: "07:32:00", status: "berhenti" },
+                    { number: "KA 548F", name: "Bandara YIA", time: "07:34:59", status: "berhenti" },
+                    { number: "KA 535", name: "Bandara YIA", time: "07:39:59", status: "berhenti" },
+                    { number: "KA 712", name: "Commuter Line Yogyakarta", time: "07:54:00", status: "terminus" },
+                    { number: "KA 549", name: "Bandara YIA", time: "07:57:00", status: "berhenti" },
+                    { number: "KA 77", name: "Lodaya", time: "08:06:00", status: "berhenti" },
+                    { number: "KA 103", name: "Bogowonto", time: "08:19:00", status: "berhenti" },
+                    { number: "KA 524", name: "Bandara YIA", time: "08:24:59", status: "terminus" },
+                    { number: "KA 525", name: "Bandara YIA", time: "08:33:00", status: "terminus" },
+                    { number: "KA 721", name: "Commuter Line Yogyakarta", time: "08:39:00", status: "terminus" },
+                    { number: "KA 511F", name: "Commuter Line Prameks Kebumen", time: "08:44:59", status: "terminus" },
+                    { number: "KA 722", name: "Commuter Line Yogyakarta", time: "08:49:00", status: "terminus" },
+                    { number: "PLB 7011", name: "Tambahan SLO BD", time: "08:53:00", status: "berhenti" },
+                    { number: "KA 563", name: "Bandara YIA", time: "08:55:00", status: "berhenti" },
+                    { number: "KA 202", name: "Joglosemarkerto", time: "09:02:59", status: "berhenti" },
+                    { number: "KA 731F", name: "Commuter Line Yogyakarta", time: "09:06:59", status: "terminus" },
+                    { number: "KA 536", name: "Bandara YIA", time: "09:15:00", status: "terminus" },
+                    { number: "KA 13", name: "Argo Lawu", time: "09:15:00", status: "berhenti" },
+                    { number: "KA 248", name: "Logawa", time: "09:27:00", status: "langsung" },
+                    { number: "KA 537", name: "Bandara YIA", time: "09:27:59", status: "terminus" },
+                    { number: "KA 732F", name: "Commuter Line Yogyakarta", time: "09:36:00", status: "terminus" },
+                    { number: "KA 75", name: "Mataram", time: "09:36:00", status: "berhenti" },
+                    { number: "KA 550", name: "Bandara YIA", time: "09:40:00", status: "terminus" },
+                    { number: "KA 551", name: "Bandara YIA", time: "09:51:00", status: "terminus" },
+                    { number: "KA 275", name: "Pasundan", time: "09:58:59", status: "langsung" },
+                    { number: "KA 502", name: "Commuter Line Prameks Kutoarjo", time: "10:05:00", status: "terminus" },
+                    { number: "KA 143", name: "Madiun Jaya", time: "10:09:00", status: "berhenti" },
+                    { number: "KA 201", name: "Joglosemarkerto", time: "10:20:00", status: "berhenti" },
+                    { number: "KA 703", name: "Commuter Line Yogyakarta", time: "10:27:00", status: "terminus" },
+                    { number: "KA 526", name: "Bandara YIA", time: "10:32:00", status: "terminus" },
+                    { number: "KA 61", name: "Manahan", time: "10:34:59", status: "berhenti" },
+                    { number: "KA 170", name: "Malioboro Ekspres", time: "10:45:00", status: "berhenti" },
+                    { number: "KA 161", name: "Bangunkarta", time: "10:45:59", status: "berhenti" },
+                    { number: "KA 538", name: "Bandara YIA", time: "10:54:59", status: "terminus" },
+                    { number: "KA 704", name: "Commuter Line Yogyakarta", time: "10:56:00", status: "terminus" },
+                    { number: "KA 81", name: "Sancaka", time: "10:59:59", status: "terminus" },
+                    { number: "KA 539", name: "Bandara YIA", time: "11:03:00", status: "terminus" },
+                    { number: "KA 2602", name: "Mawalo Tanker", time: "11:06:59", status: "langsung" },
+                    { number: "KA 89", name: "Gayabaru Malam Selatan", time: "11:15:00", status: "langsung" },
+                    { number: "KA 2716", name: "Karsolo Service", time: "11:15:59", status: "langsung" },
+                    { number: "KA 69", name: "Malabar", time: "11:26:00", status: "berhenti" },
+                    { number: "KA 552", name: "Bandara YIA", time: "11:28:59", status: "terminus" },
+                    { number: "KA 82", name: "Sancaka", time: "11:30:00", status: "terminus" },
+                    { number: "KA 154", name: "Ranggajati", time: "11:41:00", status: "berhenti" },
+                    { number: "KA 503", name: "Commuter Line Prameks Kutoarjo", time: "11:50:00", status: "terminus" },
+                    { number: "KA 713", name: "Commuter Line Yogyakarta", time: "11:59:00", status: "terminus" },
+                    { number: "KA 723", name: "Commuter Line Yogyakarta", time: "11:59:00", status: "terminus" },
+                    { number: "KA 527", name: "Bandara YIA", time: "12:00:00", status: "terminus" },
+                    { number: "KA 724", name: "Commuter Line Yogyakarta", time: "12:07:00", status: "terminus" },
+                    { number: "KA 9", name: "Argo Wilis", time: "12:09:59", status: "berhenti" },
+                    { number: "KA 564", name: "Bandara YIA", time: "12:11:00", status: "terminus" },
+                    { number: "KA 512F", name: "Commuter Line Prameks Kebumen", time: "12:22:59", status: "terminus" },
+                    { number: "KA 74", name: "Fajar Utama Solo", time: "12:33:00", status: "berhenti" },
+                    { number: "KA 565", name: "Bandara YIA", time: "12:35:00", status: "terminus" },
+                    { number: "KA 733F", name: "Commuter Line Yogyakarta", time: "12:40:59", status: "terminus" },
+                    { number: "KA 6", name: "Argo Semeru", time: "12:45:00", status: "berhenti" },
+                    { number: "KA 5", name: "Argo Semeru", time: "12:51:00", status: "berhenti" },
+                    { number: "KA 540", name: "Bandara YIA", time: "12:58:59", status: "terminus" },
+                    { number: "KA 235F", name: "Sancaka Utara", time: "13:00:59", status: "berhenti" },
+                    { number: "KA 78", name: "Lodaya", time: "13:12:00", status: "berhenti" },
+                    { number: "KA 257", name: "Progo", time: "13:14:00", status: "langsung" },
+                    { number: "KA 10", name: "Argo Wilis", time: "13:23:59", status: "berhenti" },
+                    { number: "KA 553", name: "Bandara YIA", time: "13:27:59", status: "terminus" },
+                    { number: "KA 734F", name: "Commuter Line Yogyakarta", time: "13:30:59", status: "terminus" },
+                    { number: "KA 46", name: "Taksaka", time: "13:50:00", status: "terminus" },
+                    { number: "KA 714", name: "Commuter Line Yogyakarta", time: "13:57:00", status: "terminus" },
+                    { number: "KA 2603", name: "Mawalo Tanker", time: "13:59:59", status: "langsung" },
+                    { number: "KA 528", name: "Bandara YIA", time: "14:03:59", status: "terminus" },
+                    { number: "KA 705", name: "Commuter Line Yogyakarta", time: "14:12:00", status: "terminus" },
+                    { number: "KA 529", name: "Bandara YIA", time: "14:12:59", status: "terminus" },
+                    { number: "KA 504", name: "Commuter Line Prameks Kutoarjo", time: "14:19:00", status: "terminus" },
+                    { number: "KA 153", name: "Ranggajati", time: "14:21:59", status: "berhenti" },
+                    { number: "KA 167", name: "Kertanegara", time: "14:30:59", status: "berhenti" },
+                    { number: "KA 188", name: "Joglosemarkerto", time: "14:33:00", status: "berhenti" },
+                    { number: "KA 47", name: "Taksaka", time: "14:44:59", status: "terminus" },
+                    { number: "KA 16", name: "Argo Dwipangga", time: "14:51:00", status: "berhenti" },
+                    { number: "KA 706", name: "Commuter Line Yogyakarta", time: "15:01:00", status: "terminus" },
+                    { number: "KA 541", name: "Bandara YIA", time: "15:02:00", status: "terminus" },
+                    { number: "KA 725", name: "Commuter Line Yogyakarta", time: "15:06:00", status: "terminus" },
+                    { number: "KA 110", name: "Fajar Utama Yk", time: "15:09:59", status: "terminus" },
+                    { number: "KA 505", name: "Commuter Line Prameks Kutoarjo", time: "15:15:00", status: "terminus" },
+                    { number: "KA 85", name: "Sancaka", time: "15:15:00", status: "terminus" },
+                    { number: "KA 554", name: "Bandara YIA", time: "15:20:00", status: "terminus" },
+                    { number: "KA 555", name: "Bandara YIA", time: "15:29:59", status: "terminus" },
+                    { number: "KA 566", name: "Bandara YIA", time: "15:35:00", status: "terminus" },
+                    { number: "KA 106", name: "Gajahwong", time: "15:45:59", status: "berhenti" },
+                    { number: "PLB 7021", name: "Pasundan Tambahan", time: "15:47:00", status: "langsung" },
+                    { number: "KA 567", name: "Bandara YIA", time: "15:49:00", status: "terminus" },
+                    { number: "KA 530", name: "Bandara YIA", time: "15:58:59", status: "terminus" },
+                    { number: "KA 531", name: "Bandara YIA", time: "16:07:00", status: "terminus" },
+                    { number: "KA 726", name: "Commuter Line Yogyakarta", time: "16:10:00", status: "terminus" },
+                    { number: "KA 509", name: "Commuter Line Prameks Kebumen", time: "16:20:00", status: "terminus" },
+                    { number: "KA 542", name: "Bandara YIA", time: "16:21:59", status: "terminus" },
+                    { number: "KA 70", name: "Malabar", time: "16:30:00", status: "berhenti" },
+                    { number: "KA 543", name: "Bandara YIA", time: "16:48:00", status: "terminus" },
+                    { number: "KA 556", name: "Bandara YIA", time: "16:52:00", status: "terminus" },
+                    { number: "KA 715", name: "Commuter Line Yogyakarta", time: "16:56:00", status: "terminus" },
+                    { number: "KA 86", name: "Sancaka", time: "16:59:59", status: "terminus" },
+                    { number: "PLB 7006", name: "Batavia", time: "17:02:00", status: "berhenti" },
+                    { number: "KA 282", name: "Bengawan", time: "17:06:59", status: "langsung" },
+                    { number: "PLB 7009", name: "Tambahan YK GMR", time: "17:10:00", status: "terminus" },
+                    { number: "KA 557", name: "Bandara YIA", time: "17:15:00", status: "terminus" },
+                    { number: "KA 735F", name: "Commuter Line Yogyakarta", time: "17:19:00", status: "terminus" },
+                    { number: "KA 62", name: "Manahan", time: "17:23:00", status: "berhenti" },
+                    { number: "KA 107", name: "Senja Utama Yk", time: "17:30:00", status: "terminus" },
+                    { number: "KA 716", name: "Commuter Line Yogyakarta", time: "17:35:00", status: "terminus" },
+                    { number: "KA 247", name: "Logawa", time: "17:39:00", status: "langsung" },
+                    { number: "KA 568", name: "Bandara YIA", time: "17:39:00", status: "terminus" },
+                    { number: "KA 736F", name: "Commuter Line Yogyakarta", time: "17:48:59", status: "terminus" },
+                    { number: "KA 506", name: "Commuter Line Prameks Kutoarjo", time: "17:52:00", status: "terminus" },
+                    { number: "KA 707", name: "Commuter Line Yogyakarta", time: "17:55:00", status: "terminus" },
+                    { number: "KA 2722", name: "Kalem Service", time: "18:02:59", status: "langsung" },
+                    { number: "KA 507", name: "Commuter Line Prameks Kutoarjo", time: "18:05:00", status: "terminus" },
+                    { number: "KA 708", name: "Commuter Line Yogyakarta", time: "18:08:00", status: "terminus" },
+                    { number: "KA 532", name: "Bandara YIA", time: "18:13:00", status: "terminus" },
+                    { number: "KA 2751F", name: "Cilace Trans", time: "18:13:59", status: "langsung" },
+                    { number: "KA 158", name: "Wijaya Kusuma", time: "18:22:59", status: "berhenti" },
+                    { number: "KA 569", name: "Bandara YIA", time: "18:24:59", status: "terminus" },
+                    { number: "KA 251", name: "Jayakarta", time: "18:35:00", status: "langsung" },
+                    { number: "KA 558", name: "Bandara YIA", time: "18:35:00", status: "terminus" },
+                    { number: "KA 90", name: "Gayabaru Malam Selatan", time: "18:49:00", status: "langsung" },
+                    { number: "KA 559", name: "Bandara YIA", time: "18:49:59", status: "terminus" },
+                    { number: "KA 2715", name: "Karsolo Service", time: "18:58:59", status: "langsung" },
+                    { number: "KA 256", name: "Jaka Tingkir", time: "19:00:00", status: "langsung" },
+                    { number: "KA 533", name: "Bandara YIA", time: "19:16:00", status: "terminus" },
+                    { number: "KA 276", name: "Pasundan", time: "19:20:00", status: "langsung" },
+                    { number: "KA 727", name: "Commuter Line Yogyakarta", time: "19:25:00", status: "terminus" },
+                    { number: "KA 544", name: "Bandara YIA", time: "19:29:00", status: "berhenti" },
+                    { number: "KA 510", name: "Commuter Line Prameks Kebumen", time: "19:38:00", status: "terminus" },
+                    { number: "KA 73", name: "Senja Utama Solo", time: "19:41:59", status: "berhenti" },
+                    { number: "KA 162", name: "Bangunkarta", time: "19:54:00", status: "berhenti" },
+                    { number: "KA 79", name: "Lodaya", time: "19:56:00", status: "berhenti" },
+                    { number: "KA 44", name: "Taksaka", time: "20:10:00", status: "terminus" },
+                    { number: "KA 545", name: "Bandara YIA", time: "20:12:00", status: "terminus" },
+                    { number: "KA 728", name: "Commuter Line Yogyakarta", time: "20:15:00", status: "terminus" },
+                    { number: "KA 35", name: "Gajayana", time: "20:19:00", status: "berhenti" },
+                    { number: "KA 570", name: "Bandara YIA", time: "20:24:59", status: "terminus" },
+                    { number: "KA 83", name: "Sancaka", time: "20:35:00", status: "terminus" },
+                    { number: "KA 236F", name: "Sancaka Utara", time: "20:39:00", status: "berhenti" },
+                    { number: "KA 105", name: "Gajahwong", time: "20:44:00", status: "langsung" },
+                    { number: "KA 560", name: "Bandara YIA", time: "20:50:00", status: "terminus" },
+                    { number: "KA 45", name: "Taksaka", time: "21:04:59", status: "terminus" },
+                    { number: "KA 168", name: "Kertanegara", time: "21:04:59", status: "berhenti" },
+                    { number: "KA 717", name: "Commuter Line Yogyakarta", time: "21:09:00", status: "terminus" },
+                    { number: "KA 718", name: "Commuter Line Yogyakarta", time: "21:20:00", status: "terminus" },
+                    { number: "KA 15", name: "Argo Dwipangga", time: "21:20:00", status: "berhenti" },
+                    { number: "KA 534", name: "Bandara YIA", time: "21:33:59", status: "terminus" },
+                    { number: "KA 149", name: "Singasari", time: "21:42:59", status: "langsung" },
+                    { number: "KA 2604", name: "Mawalo Tanker", time: "21:47:00", status: "langsung" },
+                    { number: "PLB 7013", name: "Lodaya Tambahan SLO BD", time: "21:51:00", status: "berhenti" },
+                    { number: "PLB 7026", name: "Tambahan PSE SLO", time: "21:55:00", status: "berhenti" },
+                    { number: "KA 709", name: "Commuter Line Yogyakarta", time: "22:01:00", status: "terminus" },
+                    { number: "KA 546", name: "Bandara YIA", time: "22:05:00", status: "terminus" },
+                    { number: "KA 71", name: "Mutiara Selatan", time: "22:11:00", status: "berhenti" },
+                    { number: "KA 157", name: "Wijaya Kusuma", time: "22:20:00", status: "berhenti" },
+                    { number: "KA 88F", name: "Sancaka", time: "22:25:00", status: "terminus" },
+                    { number: "KA 710", name: "Commuter Line Yogyakarta", time: "22:35:00", status: "terminus" },
+                    { number: "KA 67", name: "Malabar", time: "22:36:00", status: "berhenti" },
+                    { number: "PLB 7005", name: "Batavia", time: "22:51:00", status: "berhenti" },
+                    { number: "KA 7", name: "Bima", time: "23:06:00", status: "berhenti" },
+                    { number: "KA 63", name: "Manahan", time: "23:19:59", status: "berhenti" },
+                    { number: "KA 8", name: "Bima", time: "23:24:59", status: "berhenti" },
+                    { number: "KA 281", name: "Bengawan", time: "23:37:00", status: "langsung" },
+                    { number: "KA 12", name: "Turangga", time: "23:42:00", status: "berhenti" },
+                    { number: "KA 11", name: "Turangga", time: "23:44:59", status: "berhenti" },
+                ],
+                LPN: [
+                    { number: "KA 255", name: "Jaka Tingkir", time: "00:24:59", status: "berhenti" },
+                    { number: "KA 252", name: "Jayakarta", time: "00:33:00", status: "berhenti" },
+                    { number: "KA 301", name: "Parcel Tengah", time: "00:38:59", status: "berhenti" },
+                    { number: "KA 68", name: "Malabar", time: "00:58:59", status: "langsung" },
+                    { number: "KA 305", name: "Parcel Selatan", time: "01:03:00", status: "berhenti" },
+                    { number: "KA 2711", name: "Bungtalun Service", time: "01:21:00", status: "berhenti" },
+                    { number: "KA 169", name: "Malioboro Ekspres", time: "01:30:59", status: "langsung" },
+                    { number: "KA 36", name: "Gajayana", time: "01:32:00", status: "langsung" },
+                    { number: "KA 104", name: "Bogowonto", time: "01:47:00", status: "berhenti" },
+                    { number: "KA 80", name: "Lodaya", time: "01:56:00", status: "langsung" },
+                    { number: "KA 87F", name: "Sancaka", time: "01:56:00", status: "langsung" },
+                    { number: "KA 306", name: "Parcel Selatan", time: "02:26:59", status: "berhenti" },
+                    { number: "KA 72", name: "Mutiara Selatan", time: "02:42:59", status: "langsung" },
+                    { number: "KA 14", name: "Argo Lawu", time: "02:55:00", status: "langsung" },
+                    { number: "KA 2721", name: "Kalem Service", time: "03:09:59", status: "berhenti" },
+                    { number: "KA 302", name: "Parcel Tengah", time: "03:13:00", status: "berhenti" },
+                    { number: "PLB 7023", name: "Tambahan SGU KAC", time: "03:25:00", status: "langsung" },
+                    { number: "KA 2601", name: "Mawalo Tanker", time: "03:27:59", status: "langsung" },
+                    { number: "KA 144", name: "Madiun Jaya", time: "04:05:00", status: "langsung" },
+                    { number: "KA 76", name: "Mataram", time: "04:43:00", status: "langsung" },
+                    { number: "KA 2750F", name: "Cilace Trans", time: "05:01:00", status: "langsung" },
+                    { number: "KA 720", name: "Commuter Line Yogyakarta", time: "05:10:00", status: "berhenti" },
+                    { number: "KA 150", name: "Singasari", time: "05:30:59", status: "berhenti" },
+                    { number: "KA 729F", name: "Commuter Line Yogyakarta", time: "05:42:59", status: "berhenti" },
+                    { number: "KA 64", name: "Manahan", time: "05:48:00", status: "langsung" },
+                    { number: "KA 730F", name: "Commuter Line Yogyakarta", time: "06:04:00", status: "berhenti" },
+                    { number: "KA 701", name: "Commuter Line Yogyakarta", time: "06:19:00", status: "berhenti" },
+                    { number: "KA 274", name: "Kahuripan", time: "06:22:59", status: "berhenti" },
+                    { number: "KA 258", name: "Progo", time: "06:40:00", status: "berhenti" },
+                    { number: "KA 84", name: "Sancaka", time: "06:47:59", status: "" },
+                    { number: "KA 193", name: "Joglosemarkerto", time: "06:58:00", status: "berhenti" },
+                    { number: "KA 278", name: "Sri Tanjung", time: "07:00:00", status: "berhenti" },
+                    { number: "KA 702", name: "Commuter Line Yogyakarta", time: "07:10:00", status: "berhenti" },
+                    { number: "KA 2712", name: "Bungtalun Service", time: "07:18:59", status: "berhenti" },
+                    { number: "KA 711", name: "Commuter Line Yogyakarta", time: "07:25:00", status: "berhenti" },
+                    { number: "KA 712", name: "Commuter Line Yogyakarta", time: "07:59:00", status: "berhenti" },
+                    { number: "KA 77", name: "Lodaya", time: "08:03:00", status: "langsung" },
+                    { number: "KA 103", name: "Bogowonto", time: "08:15:00", status: "berhenti" },
+                    { number: "PLB 7024", name: "Tambahan KAC SGU", time: "08:23:00", status: "" },
+                    { number: "KA 721", name: "Commuter Line Yogyakarta", time: "08:35:00", status: "berhenti" },
+                    { number: "KA 722", name: "Commuter Line Yogyakarta", time: "08:54:00", status: "berhenti" },
+                    { number: "KA 731F", name: "Commuter Line Yogyakarta", time: "09:00:59", status: "berhenti" },
+                    { number: "KA 13", name: "Argo Lawu", time: "09:11:00", status: "langsung" },
+                    { number: "KA 248", name: "Logawa", time: "09:31:00", status: "berhenti" },
+                    { number: "KA 75", name: "Mataram", time: "09:33:00", status: "langsung" },
+                    { number: "KA 732F", name: "Commuter Line Yogyakarta", time: "09:40:00", status: "berhenti" },
+                    { number: "KA 275", name: "Pasundan", time: "09:49:00", status: "berhenti" },
+                    { number: "KA 143", name: "Madiun Jaya", time: "10:05:00", status: "langsung" },
+                    { number: "KA 703", name: "Commuter Line Yogyakarta", time: "10:23:00", status: "berhenti" },
+                    { number: "KA 61", name: "Manahan", time: "10:30:59", status: "langsung" },
+                    { number: "KA 161", name: "Bangunkarta", time: "10:43:00", status: "langsung" },
+                    { number: "KA 170", name: "Malioboro Ekspres", time: "10:54:00", status: "langsung" },
+                    { number: "KA 81", name: "Sancaka", time: "10:56:00", status: "langsung" },
+                    { number: "KA 704", name: "Commuter Line Yogyakarta", time: "11:01:00", status: "berhenti" },
+                    { number: "KA 89", name: "Gayabaru Malam Selatan", time: "11:05:00", status: "berhenti" },
+                    { number: "KA 2602", name: "Mawalo Tanker", time: "11:10:00", status: "langsung" },
+                    { number: "KA 2716", name: "Karsolo Service", time: "11:19:00", status: "berhenti" },
+                    { number: "KA 69", name: "Malabar", time: "11:23:00", status: "langsung" },
+                    { number: "KA 82", name: "Sancaka", time: "11:33:00", status: "langsung" },
+                    { number: "KA 154", name: "Ranggajati", time: "11:50:00", status: "langsung" },
+                    { number: "KA 713", name: "Commuter Line Yogyakarta", time: "11:53:59", status: "berhenti" },
+                    { number: "KA 723", name: "Commuter Line Yogyakarta", time: "11:55:00", status: "berhenti" },
+                    { number: "KA 9", name: "Argo Wilis", time: "12:06:00", status: "langsung" },
+                    { number: "KA 724", name: "Commuter Line Yogyakarta", time: "12:12:00", status: "berhenti" },
+                    { number: "KA 733F", name: "Commuter Line Yogyakarta", time: "12:35:00", status: "berhenti" },
+                    { number: "KA 74", name: "Fajar Utama Solo", time: "12:40:00", status: "langsung" },
+                    { number: "KA 5", name: "Argo Semeru", time: "12:47:59", status: "langsung" },
+                    { number: "KA 6", name: "Argo Semeru", time: "12:53:00", status: "langsung" },
+                    { number: "KA 235F", name: "Sancaka Utara", time: "12:58:00", status: "langsung" },
+                    { number: "KA 257", name: "Progo", time: "13:09:59", status: "berhenti" },
+                    { number: "KA 78", name: "Lodaya", time: "13:20:00", status: "langsung" },
+                    { number: "KA 10", name: "Argo Wilis", time: "13:30:00", status: "langsung" },
+                    { number: "KA 734F", name: "Commuter Line Yogyakarta", time: "13:34:59", status: "berhenti" },
+                    { number: "KA 2603", name: "Mawalo Tanker", time: "13:54:59", status: "langsung" },
+                    { number: "KA 714", name: "Commuter Line Yogyakarta", time: "14:02:00", status: "berhenti" },
+                    { number: "KA 705", name: "Commuter Line Yogyakarta", time: "14:08:00", status: "berhenti" },
+                    { number: "KA 153", name: "Ranggajati", time: "14:17:59", status: "langsung" },
+                    { number: "KA 167", name: "Kertanegara", time: "14:26:59", status: "langsung" },
+                    { number: "KA 188", name: "Joglosemarkerto", time: "14:41:00", status: "berhenti" },
+                    { number: "KA 16", name: "Argo Dwipangga", time: "14:59:00", status: "langsung" },
+                    { number: "KA 725", name: "Commuter Line Yogyakarta", time: "15:01:00", status: "berhenti" },
+                    { number: "KA 706", name: "Commuter Line Yogyakarta", time: "15:06:00", status: "berhenti" },
+                    { number: "KA 85", name: "Sancaka", time: "15:11:00", status: "langsung" },
+                    { number: "PLB 7021", name: "Pasundan Tambahan", time: "15:38:00", status: "berhenti" },
+                    { number: "KA 106", name: "Gajahwong", time: "15:49:59", status: "berhenti" },
+                    { number: "KA 726", name: "Commuter Line Yogyakarta", time: "16:15:00", status: "berhenti" },
+                    { number: "KA 70", name: "Malabar", time: "16:38:00", status: "langsung" },
+                    { number: "KA 715", name: "Commuter Line Yogyakarta", time: "16:52:00", status: "berhenti" },
+                    { number: "KA 86", name: "Sancaka", time: "17:03:00", status: "langsung" },
+                    { number: "KA 282", name: "Bengawan", time: "17:10:00", status: "berhenti" },
+                    { number: "KA 735F", name: "Commuter Line Yogyakarta", time: "17:14:00", status: "berhenti" },
+                    { number: "KA 247", name: "Logawa", time: "17:26:59", status: "berhenti" },
+                    { number: "KA 62", name: "Manahan", time: "17:30:59", status: "langsung" },
+                    { number: "KA 716", name: "Commuter Line Yogyakarta", time: "17:40:00", status: "berhenti" },
+                    { number: "KA 707", name: "Commuter Line Yogyakarta", time: "17:49:00", status: "berhenti" },
+                    { number: "KA 736F", name: "Commuter Line Yogyakarta", time: "17:53:00", status: "berhenti" },
+                    { number: "KA 2722", name: "Kalem Service", time: "18:06:00", status: "berhenti" },
+                    { number: "KA 2751F", name: "Cilace Trans", time: "18:09:59", status: "langsung" },
+                    { number: "KA 708", name: "Commuter Line Yogyakarta", time: "18:13:00", status: "berhenti" },
+                    { number: "KA 251", name: "Jayakarta", time: "18:26:00", status: "berhenti" },
+                    { number: "KA 158", name: "Wijaya Kusuma", time: "18:35:00", status: "langsung" },
+                    { number: "KA 2715", name: "Karsolo Service", time: "18:40:59", status: "berhenti" },
+                    { number: "KA 90", name: "Gayabaru Malam Selatan", time: "18:53:00", status: "berhenti" },
+                    { number: "KA 256", name: "Jaka Tingkir", time: "19:03:00", status: "berhenti" },
+                    { number: "KA 727", name: "Commuter Line Yogyakarta", time: "19:21:00", status: "berhenti" },
+                    { number: "KA 276", name: "Pasundan", time: "19:25:00", status: "berhenti" },
+                    { number: "KA 277", name: "Sri Tanjung", time: "19:32:59", status: "berhenti" },
+                    { number: "KA 73", name: "Senja Utama Solo", time: "19:39:00", status: "langsung" },
+                    { number: "KA 79", name: "Lodaya", time: "19:52:00", status: "langsung" },
+                    { number: "KA 162", name: "Bangunkarta", time: "20:01:00", status: "langsung" },
+                    { number: "KA 35", name: "Gajayana", time: "20:15:59", status: "langsung" },
+                    { number: "KA 728", name: "Commuter Line Yogyakarta", time: "20:20:00", status: "berhenti" },
+                    { number: "KA 83", name: "Sancaka", time: "20:30:59", status: "langsung" },
+                    { number: "KA 105", name: "Gajahwong", time: "20:39:59", status: "berhenti" },
+                    { number: "KA 236F", name: "Sancaka Utara", time: "20:46:59", status: "langsung" },
+                    { number: "KA 717", name: "Commuter Line Yogyakarta", time: "21:05:00", status: "berhenti" },
+                    { number: "KA 168", name: "Kertanegara", time: "21:13:59", status: "langsung" },
+                    { number: "KA 15", name: "Argo Dwipangga", time: "21:15:59", status: "langsung" },
+                    { number: "KA 718", name: "Commuter Line Yogyakarta", time: "21:25:00", status: "berhenti" },
+                    { number: "KA 149", name: "Singasari", time: "21:33:59", status: "langsung" },
+                    { number: "KA 2604", name: "Mawalo Tanker", time: "21:49:59", status: "langsung" },
+                    { number: "KA 709", name: "Commuter Line Yogyakarta", time: "21:57:00", status: "berhenti" },
+                    { number: "KA 71", name: "Mutiara Selatan", time: "22:07:00", status: "langsung" },
+                    { number: "KA 157", name: "Wijaya Kusuma", time: "22:16:00", status: "langsung" },
+                    { number: "KA 88F", name: "Sancaka", time: "22:27:59", status: "langsung" },
+                    { number: "KA 67", name: "Malabar", time: "22:32:00", status: "langsung" },
+                    { number: "KA 710", name: "Commuter Line Yogyakarta", time: "22:40:00", status: "berhenti" },
+                    { number: "KA 7", name: "Bima", time: "23:01:59", status: "langsung" },
+                    { number: "KA 63", name: "Manahan", time: "23:15:59", status: "langsung" },
+                    { number: "KA 281", name: "Bengawan", time: "23:28:59", status: "berhenti" },
+                    { number: "KA 8", name: "Bima", time: "23:33:00", status: "langsung" },
+                    { number: "KA 11", name: "Turangga", time: "23:41:00", status: "langsung" },
+                    { number: "KA 12", name: "Turangga", time: "23:50:00", status: "langsung" },
+                    { number: "KA 273", name: "Kahuripan", time: "23:53:59", status: "berhenti" },
+                ],
+            };
+
+        // Nama stasiun lengkap
+        const stationNames = {
+            YK: "Stasiun Yogyakarta (YK)",
+            LPN: "Stasiun Lempuyangan (LPN)",
+        };
+
+        let currentStation = null;
+        let currentTime = new Date();
+
+        function updateClock() {
+            currentTime = new Date();
+            const timeString = currentTime.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+            const dateString = currentTime.toLocaleDateString("id-ID", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+            document.getElementById("currentTime").textContent = timeString;
+            document.getElementById("currentDate").textContent = dateString;
+
+            // Update kereta realtime
+            if (currentStation) displayTrains(currentStation);
+        }
+
+        function timeToMinutes(timeStr) {
+            const [hours, minutes, seconds] = timeStr.split(":").map(Number);
+            return hours * 60 + minutes + seconds / 60;
+        }
+
+        function formatTime(timeStr) {
+            const [h, m] = timeStr.split(":");
+            return `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
+        }
+
+        function filterTrains(station) {
+            if (!station) return { passedTrains: [], currentTrains: [], upcomingTrains: [] };
+
+            const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes() + currentTime.getSeconds() / 60;
+            const stationTrains = trainSchedules[station];
+
+            const passedTrains = stationTrains
+                .filter((train) => timeToMinutes(train.time) < currentMinutes)
+                .sort((a, b) => timeToMinutes(b.time) - timeToMinutes(a.time))
+                .slice(0, 2);
+
+            const currentTrains = stationTrains.filter((train) => {
+                const trainMinutes = timeToMinutes(train.time);
+                return Math.abs(trainMinutes - currentMinutes) <= 2;
+            });
+
+            const upcomingTrains = stationTrains
+                .filter((train) => timeToMinutes(train.time) > currentMinutes)
+                .sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time))
+                .slice(0, 2);
+
+            return { passedTrains, currentTrains, upcomingTrains };
+        }
+
+        function displayTrains(station) {
+            currentStation = station;
+            document.getElementById("stationName").textContent = stationNames[station];
+
+            const { passedTrains, currentTrains, upcomingTrains } = filterTrains(station);
+
+            const sections = [
+                { id: "passedTrains", trains: passedTrains, msg: "Tidak ada data", prefix: "Melintas pukul" },
+                { id: "currentTrains", trains: currentTrains, msg: "Tidak ada kereta yang sedang melintas", prefix: "Jadwal pukul" },
+                { id: "upcomingTrains", trains: upcomingTrains, msg: "Tidak ada jadwal dalam waktu dekat", prefix: "Akan melintas pukul" },
+            ];
+
+            sections.forEach((sec) => {
+                const list = document.getElementById(sec.id);
+                list.innerHTML = "";
+
+                if (sec.trains.length > 0) {
+                    sec.trains.forEach((train) => {
+                        const li = document.createElement("li");
+                        li.className = "train-item";
+                        
+                        // Tambahkan ikon khusus untuk kereta terminus
+                        const terminusIcon = train.status === "terminus" 
+                            ? ' <i class="fas fa-flag-checkered terminus-icon" title="Kereta Terminus"></i>' 
+                            : '';
+                        
+                        li.innerHTML = `
+                            <div class="train-number">${train.number}${terminusIcon}</div>
+                            <div class="train-name">${train.name}</div>
+                            <div class="train-time">${sec.prefix} ${formatTime(train.time)}</div>
+                            <span class="train-status ${train.status}">
+                                ${train.status === "berhenti" ? "Berhenti" : 
+                                  train.status === "langsung" ? "Langsung" : "Terminus"}
+                            </span>
+                        `;
+                        list.appendChild(li);
+                    });
+                } else {
+                    list.innerHTML = `<li class="no-trains">${sec.msg}</li>`;
+                }
+            });
+        }
+
+        // Event listeners untuk dropdown menu
+        function setupStationDropdown() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            const stationLinks = document.querySelectorAll('.dropdown-content a');
+            
+            // Toggle dropdown saat tombol hamburger diklik
+            hamburgerMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+            
+            // Tutup dropdown saat klik di luar
+            document.addEventListener('click', function(e) {
+                if (!hamburgerMenu.contains(e.target) && !dropdownContent.contains(e.target)) {
+                    dropdownContent.classList.remove('show');
+                }
+            });
+            
+            // Tangani pemilihan stasiun dari dropdown
+            stationLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hapus class active dari semua link
+                    stationLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Tambahkan class active ke link yang dipilih
+                    this.classList.add('active');
+                    
+                    // Tutup dropdown
+                    dropdownContent.classList.remove('show');
+                    
+                    // Panggil fungsi displayTrains dengan stasiun yang dipilih
+                    displayTrains(this.dataset.station);
+                    
+                    // Update teks tombol hamburger
+                    hamburgerMenu.innerHTML = `<i class="fas fa-train"></i> ${this.textContent}`;
+                    
+                    // Update running text
+                    updateRunningText(this.dataset.station);
+                });
+            });
+        }
+
+        document.getElementById("refreshBtn").addEventListener("click", function () {
+            updateClock();
+            if (currentStation) {
+                updateRunningText(currentStation);
+            }
+        });
+
+        // Fungsi untuk mengirim kritik dan saran ke WhatsApp
+        function setupFeedbackForm() {
+            const feedbackForm = document.getElementById("feedbackForm");
+            const feedbackInput = document.getElementById("feedbackInput");
+            const feedbackSubmit = document.getElementById("feedbackSubmit");
+
+            feedbackForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const message = feedbackInput.value.trim();
+                if (!message) return;
+
+                // Encode pesan untuk URL
+                const encodedMessage = encodeURIComponent(message);
+
+                // Nomor WhatsApp tujuan
+                const phoneNumber = "6285602321009";
+
+                // Buat URL WhatsApp
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+                // Buka jendela baru untuk WhatsApp
+                window.open(whatsappURL, "_blank");
+
+                // Reset form
+                feedbackInput.value = "";
+            });
+        }
+
+        // Fungsi untuk menampilkan jadwal lengkap dalam modal
+        function showFullSchedule(station) {
+            const modal = document.getElementById('scheduleModal');
+            const tableContainer = document.getElementById('scheduleTableContainer');
+
+            // Update tab aktif
+            document.querySelectorAll('.station-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.station === station) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Filter dan urutkan jadwal
+            const trains = [...trainSchedules[station]].sort((a, b) => {
+                return timeToMinutes(a.time) - timeToMinutes(b.time);
+            });
+
+            // Buat tabel
+            let tableHTML = `
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>No. Kereta</th>
+                            <th>Nama Kereta</th>
+                            <th>Waktu</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            trains.forEach(train => {
+                // Tambahkan ikon untuk kereta terminus
+                const terminusIcon = train.status === "terminus" 
+                    ? ' <i class="fas fa-flag-checkered terminus-icon" title="Kereta Terminus"></i>' 
+                    : '';
+
+                tableHTML += `
+                    <tr>
+                        <td>${train.number}${terminusIcon}</td>
+                        <td>${train.name}</td>
+                        <td>${formatTime(train.time)}</td>
+                        <td><span class="status-badge status-${train.status}">
+                            ${train.status === 'berhenti' ? 'Berhenti' : 
+                              train.status === 'langsung' ? 'Langsung' : 'Terminus'}
+                        </span></td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            tableContainer.innerHTML = tableHTML;
+            modal.classList.add('show');
+
+            // Setup pencarian
+            const searchInput = document.getElementById('trainSearch');
+            searchInput.value = '';
+            searchInput.oninput = function () {
+                const searchText = this.value.toLowerCase();
+                const rows = tableContainer.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const trainNumber = row.cells[0].textContent.toLowerCase();
+                    const trainName = row.cells[1].textContent.toLowerCase();
+
+                    if (trainNumber.includes(searchText) || trainName.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            };
+        }
+
+        // Event listener untuk tombol jadwal lengkap
+        document.getElementById("showScheduleBtn").addEventListener("click", function() {
+            // Dapatkan stasiun aktif dari dropdown
+            const activeStationLink = document.querySelector('.dropdown-content a.active');
+            if (activeStationLink) {
+                showFullSchedule(activeStationLink.dataset.station);
+            } else {
+                // Fallback ke stasiun default jika tidak ada yang aktif
+                showFullSchedule('YK');
+            }
+        });
+
+        // Event listener untuk tutup modal
+        document.querySelector('.close-btn').addEventListener('click', function () {
+            document.getElementById('scheduleModal').classList.remove('show');
+        });
+
+        // Event listener untuk tab stasiun di modal
+        document.querySelectorAll('.station-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                showFullSchedule(this.dataset.station);
+            });
+        });
+
+        // Tutup modal saat klik di luar konten
+        window.addEventListener('click', function (event) {
+            const modal = document.getElementById('scheduleModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
+        // Fungsi untuk mengupdate running text
+        function updateRunningText(station) {
+            const runningTextContent = document.getElementById('runningTextContent');
+            const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+
+            // Ambil jadwal terdekat
+            const upcomingTrains = trainSchedules[station]
+                .filter(train => timeToMinutes(train.time) > currentMinutes)
+                .sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time))
+                .slice(0, 3);
+
+            if (upcomingTrains.length > 0) {
+                const nextTrain = upcomingTrains[0];
+                const formattedTime = formatTime(nextTrain.time);
+
+                // Teks yang berbeda untuk kereta terminus
+                let statusText = '';
+                if (nextTrain.status === 'berhenti') {
+                    statusText = 'berhenti';
+                } else if (nextTrain.status === 'langsung') {
+                    statusText = 'melintas';
+                } else {
+                    statusText = 'berterminus';
+                }
+
+                let message = ` ${nextTrain.number} ${nextTrain.name} `;
+                message += `akan ${statusText} di ${stationNames[station]} `;
+                message += `pukul ${formattedTime} WIB.  `;
+
+                if (upcomingTrains.length > 1) {
+                    message += `Dilanjutkan ${upcomingTrains[1].number} (${formatTime(upcomingTrains[1].time)}) `;
+                    if (upcomingTrains.length > 2) {
+                        message += `dan ${upcomingTrains[2].number} (${formatTime(upcomingTrains[2].time)}) `;
+                    }
+                }
+
+                runningTextContent.textContent = message;
+            } else {
+                runningTextContent.textContent = `Tidak ada jadwal kereta yang akan datang di ${stationNames[station]}.`;
+            }
+        }
+
+        // Musik otomatis diputar saat halaman dibuka (jika browser mengizinkan)
+        document.addEventListener("DOMContentLoaded", function () {
+            const music = document.getElementById("bgMusic");
+            const musicBtn = document.getElementById("musicBtn");
+            let isPlaying = false;
+
+            // Coba autoplay
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i> Hentikan Musik';
+            }).catch(() => {
+                // Kalau autoplay diblokir, tunggu klik user
+                isPlaying = false;
+                musicBtn.innerHTML = '<i class="fas fa-play"></i> Lagu Kedatangan';
+            });
+
+            // Toggle musik saat tombol diklik
+            musicBtn.addEventListener("click", () => {
+                if (isPlaying) {
+                    music.pause();
+                    isPlaying = false;
+                    musicBtn.innerHTML = '<i class="fas fa-play"></i> Putar Musik';
+                } else {
+                    music.play();
+                    isPlaying = true;
+                    musicBtn.innerHTML = '<i class="fas fa-pause"></i> Hentikan Musik';
+                }
+            });
+        });
+
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            updateClock();
+            setInterval(updateClock, 1000);
+            setupStationDropdown();
+            setupFeedbackForm();
+            
+            // Set stasiun default (YK) sebagai aktif di dropdown
+            const defaultStationLink = document.querySelector('.dropdown-content a[data-station="YK"]');
+            if (defaultStationLink) {
+                defaultStationLink.classList.add('active');
+                document.querySelector('.hamburger-menu').innerHTML = `<i class="fas fa-train"></i> ${defaultStationLink.textContent}`;
+                displayTrains('YK');
+            }
+            
+            // Inisialisasi running text
+            setTimeout(() => {
+                updateRunningText('YK');
+            }, 1000);
+        });
+
+        // JavaScript: Fungsi kontrol musik
+    document.addEventListener('DOMContentLoaded', function() {
+        const audio = document.getElementById('stationSound');
+        const musicBtn = document.getElementById('musicToggle');
+        const volumeSlider = document.getElementById('volumeSlider');
+        
+        // Atur volume awal
+        audio.volume = volumeSlider.value;
+        
+        // Event listener untuk tombol musik
+        musicBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                musicBtn.style.background = 'linear-gradient(135deg, var(--accent-color), #e56a00)';
+            } else {
+                audio.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                musicBtn.style.background = 'linear-gradient(135deg, var(--secondary-color), #2563eb)';
+            }
+        });
+        
+        // Event listener untuk slider volume
+        volumeSlider.addEventListener('input', function() {
+            audio.volume = this.value;
+        });
+        
+        // Reset tampilan ketika audio selesai
+        audio.addEventListener('ended', function() {
+            musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            musicBtn.style.background = 'linear-gradient(135deg, var(--secondary-color), #2563eb)';
+        });
+    });
+
+    // ==================== GALERI SLIDE SHOW ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi variabel galeri
+        let currentSlide = 0;
+        let slideInterval;
+        const slideDuration = 5000; // 5 detik per slide
+        
+        // Elemen DOM
+        const slider = document.querySelector('.gallery-slider');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.gallery-prev');
+        const nextBtn = document.querySelector('.gallery-next');
+        
+        // Fungsi untuk menampilkan slide tertentu
+        function showSlide(index) {
+            // Pastikan index dalam range yang valid
+            if (index < 0) {
+                index = slides.length - 1;
+            } else if (index >= slides.length) {
+                index = 0;
+            }
+            
+            // Sembunyikan semua slide terlebih dahulu
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Tampilkan slide yang dipilih
+            slides[index].style.display = 'block';
+            
+            // Update dot aktif
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        // Fungsi untuk slide berikutnya
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        // Fungsi untuk memulai slideshow otomatis
+        function startSlideshow() {
+            stopSlideshow();
+            slideInterval = setInterval(nextSlide, slideDuration);
+        }
+        
+        // Fungsi untuk menghentikan slideshow
+        function stopSlideshow() {
+            clearInterval(slideInterval);
+        }
+        
+        // Event listener untuk tombol navigasi
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                stopSlideshow();
+                showSlide(currentSlide - 1);
+                startSlideshow();
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                stopSlideshow();
+                nextSlide();
+                startSlideshow();
+            });
+        }
+        
+        // Event listener untuk dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                stopSlideshow();
+                const slideIndex = parseInt(this.getAttribute('data-index'));
+                showSlide(slideIndex);
+                startSlideshow();
+            });
+        });
+        
+        // Hentikan slideshow saat hover, lanjutkan saat mouse leave
+        const galleryContainer = document.querySelector('.gallery-container');
+        if (galleryContainer) {
+            galleryContainer.addEventListener('mouseenter', stopSlideshow);
+            galleryContainer.addEventListener('mouseleave', startSlideshow);
+        }
+        
+        // Fungsi untuk memeriksa dan menangani gambar error
+        function checkImages() {
+            slides.forEach((slide, index) => {
+                const img = slide.querySelector('img');
+                if (img) {
+                    // Cek jika gambar gagal dimuat
+                    img.onerror = function() {
+                        console.error(`Gambar ${index + 1} tidak dapat dimuat: ${img.src}`);
+                        // Ganti dengan placeholder
+                        img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%231E40AF"/><text x="200" y="160" font-family="Arial" font-size="20" text-anchor="middle" fill="white">Foto ' + (index + 1) + '</text></svg>';
+                    };
+                    
+                    // Cek jika gambar berhasil dimuat
+                    img.onload = function() {
+                        console.log(`Gambar ${index + 1} berhasil dimuat`);
+                    };
+                }
+            });
+        }
+        
+        // Inisialisasi galeri
+        function initGallery() {
+            // Pastikan semua slide disembunyikan terlebih dahulu
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Tampilkan slide pertama
+            showSlide(0);
+            
+            // Periksa status gambar
+            checkImages();
+            
+            // Mulai slideshow otomatis
+            startSlideshow();
+        }
+        
+        // Jalankan inisialisasi galeri
+        initGallery();
+    });
+    </script>
+</body>
+</html>
